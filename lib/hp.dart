@@ -1,7 +1,7 @@
+import 'package:ayf_admin/menu.dart';
 import 'package:ayf_admin/simpleroundbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -16,11 +16,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   bool inputIsValid = true;
   String username = "";
+  String password = "";
+  final LocalAuthentication auth = LocalAuthentication();
 
-  Widget champAuth(String label) {
+  Widget champAuth(int i, String label) {
     return Container(
       margin: EdgeInsets.all(20.0),
-      child: new TextFormField(
+      child: new TextField(
         decoration: new InputDecoration(
           labelText: label,
           fillColor: Colors.white,
@@ -30,12 +32,14 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ),
-        validator: (val) {
-          if(val.length==0) {
-            return "Invalide !";
-          }else{
-            return null;
-          }
+        onChanged: (String str) {
+          setState(() {
+            if(i==0) {
+              username = str;
+            } else {
+              password = str;
+            }
+          });
         },
         keyboardType: TextInputType.emailAddress,
         style: new TextStyle(
@@ -45,39 +49,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  final LocalAuthentication auth = LocalAuthentication();
-  bool _canCheckBiometrics;
-  List<BiometricType> _availableBiometrics;
-  String _authorized = 'Not Authorized';
-
-  Future<void> _checkBiometrics() async {
-    bool canCheckBiometrics;
-    try {
-      canCheckBiometrics = await auth.canCheckBiometrics;
-    } on PlatformException catch (e) {
-      print(e);
-    }
-    if (!mounted) return;
-
-    setState(() {
-      _canCheckBiometrics = canCheckBiometrics;
-    });
-  }
-
-  Future<void> _getAvailableBiometrics() async {
-    List<BiometricType> availableBiometrics;
-    try {
-      availableBiometrics = await auth.getAvailableBiometrics();
-    } on PlatformException catch (e) {
-      print(e);
-    }
-    if (!mounted) return;
-
-    setState(() {
-      _availableBiometrics = availableBiometrics;
-    });
-  }
-
   Future<void> _authenticate() async {
     bool authenticated = false;
     try {
@@ -85,14 +56,11 @@ class _MyHomePageState extends State<MyHomePage> {
           localizedReason: 'Scan your fingerprint to authenticate',
           useErrorDialogs: true,
           stickyAuth: true);
+      changementPage();
     } on PlatformException catch (e) {
       print(e);
     }
     if (!mounted) return;
-
-    setState(() {
-      _authorized = authenticated ? 'Authorized' : 'Not Authorized';
-    });
   }
 
   @override
@@ -100,29 +68,47 @@ class _MyHomePageState extends State<MyHomePage> {
     return MaterialApp(
         home: Scaffold(
           appBar: AppBar(
-            title: const Text('Plugin example app'),
+            title: Text(widget.title),
+            centerTitle: true,
           ),
-          body: ConstrainedBox(
-              constraints: const BoxConstraints.expand(),
+          body: Center(
+            child: SingleChildScrollView(
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text('Can check biometrics: $_canCheckBiometrics\n'),
-                    RaisedButton(
-                      child: const Text('Check biometrics'),
-                      onPressed: _checkBiometrics,
+                    FlutterLogo(size: MediaQuery.of(context).size.width/3.5,),
+                    champAuth(0, "Nom d'utilisateur"),
+                    champAuth(1, "Mot de passe"),
+                    SimpleRoundIconButton(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      buttonText: Text("CONNEXION", style: TextStyle(
+                          color: Colors.white
+                      ),),
+                      textColor: Colors.white,
+                      icon: Icon(Icons.check),
+                      iconAlignment: Alignment.centerRight,
+                      onPressed: () {
+
+                      },
                     ),
-                    Text('Available biometrics: $_availableBiometrics\n'),
-                    RaisedButton(
-                      child: const Text('Get available biometrics'),
-                      onPressed: _getAvailableBiometrics,
-                    ),
-                    Text('Current State: $_authorized\n'),
-                    RaisedButton(
-                      child: const Text('Authenticate'),
+                    SimpleRoundIconButton(
+                      backgroundColor: Colors.green,
+                      buttonText: Text("EMPREINTE DIGITALE", style: TextStyle(
+                          color: Colors.white
+                      ),),
+                      textColor: Colors.white,
+                      icon: Icon(Icons.arrow_forward),
                       onPressed: _authenticate,
-                    )
-                  ])),
+                    ),
+                  ]),
+            ),
+          ),
         ));
+  }
+
+  void changementPage() {
+    Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bC){
+      return new Menu();
+    }));
   }
 }
