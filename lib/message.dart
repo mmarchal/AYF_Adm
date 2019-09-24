@@ -13,7 +13,7 @@ class _Message extends State<Message> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      
+
     );
   }
 
