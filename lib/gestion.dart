@@ -2,16 +2,16 @@ import 'package:ayf_admin/models/custom_drawer.dart';
 import 'package:ayf_admin/models/custom_text.dart';
 import 'package:flutter/material.dart';
 
-class Menu extends StatefulWidget {
+class Gestion extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _Menu();
+    return new _Gestion();
   }
 }
 
-class _Menu extends State<Menu> {
+class _Gestion extends State<Gestion> {
 
-  final String nom = "Menu";
+  final String nom = "Gestion des pronostics";
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +20,7 @@ class _Menu extends State<Menu> {
         title: CustomText(nom, factor: 1.25,),
         centerTitle: true,
       ),
-      body: new Center(
-
-      ),
-      drawer: AppDrawer(value: nom,),
+      drawer: AppDrawer(value: nom),
     );
   }
 
