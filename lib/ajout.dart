@@ -191,26 +191,27 @@ class _Ajout extends State<Ajout> {
                   textColor: Colors.white,
                   icon: Icon(Icons.check_box),
                   onPressed: () {
+                    List<String> champsVides = new List();
+                    if(bookmakerSelection==null || f==null || matchSelection==null || pronoSelection==null || coteSelection==null ) {
+                      if(bookmakerSelection==null) {
+                        champsVides.add("bookmaker");
+                      }
+                      if(f==null) {
+                        champsVides.add("date");
+                      }
+                      if(matchSelection==null) {
+                        champsVides.add("match");
+                      }
+                      if(pronoSelection==null) {
+                        champsVides.add("pronostic");
+                      }
+                      if(coteSelection==null) {
+                        champsVides.add("côte");
+                      }
+                      dialogErreur(champsVides);
+                    }
                     Pronostic p = new Pronostic(null, bookmakerSelection, tableaux[this._radioVal], f.format(date), matchSelection, pronoSelection, coteSelection, explicationSelection, null);
                     print(p.toJson());
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext bC) => AlertDialog(
-                        title: CustomText("Verification", color: Colors.black, factor: 1.5,),
-                        content: Column(
-                          children: <Widget>[
-                            CustomText(bookmakerSelection, color: Colors.black,),
-                            CustomText(tableaux[this._radioVal], color: Colors.black,),
-                            CustomText(f.format(date), color: Colors.black,),
-                            CustomText((matchSelection==null) ? "null" : matchSelection, color: Colors.black,),
-                            CustomText((pronoSelection==null) ? "null" : pronoSelection, color: Colors.black,),
-                            CustomText((coteSelection==null) ? "null" : coteSelection.toString(), color: Colors.black,),
-                            CustomText((explicationSelection==null) ? "null" : explicationSelection, color: Colors.black,),
-                          ],
-                        ),
-                      )
-                    );
-                    //recupDatas();
                   },
                 ),
               ),
@@ -267,5 +268,45 @@ class _Ajout extends State<Ajout> {
       index = index + 1;
       return result;
     });
+  }
+
+  void dialogErreur(List<String> champsVides) {
+    showDialog<String>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext bC) => AlertDialog(
+          title: CustomText("ERREUR", factor: 2.0, color: Colors.red,),
+          content: Container(
+            width: double.maxFinite,
+            child: Column(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                CustomText("Voici le(s) champ(s) qui doivent être rempli : ", color: Colors.red, factor: 1.75,),
+                Flexible(
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: champsVides.length,
+                        itemBuilder: (BuildContext bContext, int i) {
+                          return ListTile(
+                            leading: Icon(Icons.star, color: Colors.red),
+                            title: CustomText(champsVides[i], color: Colors.red, factor: 1.5,),
+                          );
+                        }
+                    )
+                )
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: CustomText("OK", color: Colors.green, factor: 2.0,)
+            )
+          ],
+        )
+    );
   }
 }
