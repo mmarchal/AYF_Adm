@@ -93,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     SimpleRoundIconButton(
                       backgroundColor: Colors.green,
-                      buttonText: Text("EMPREINTE DIGITALE", style: TextStyle(
+                      buttonText: Text("EMPREINTE DIGITALE", maxLines: 3, style: TextStyle(
                           color: Colors.white
                       ),),
                       textColor: Colors.white,

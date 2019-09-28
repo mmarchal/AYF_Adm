@@ -1,4 +1,5 @@
 import 'package:ayf_admin/hp.dart';
+import 'package:ayf_admin/menu.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -12,7 +13,8 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.blue
       ),
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(title: 'AYF Admin'),
+      // home: MyHomePage(title: 'AYF Admin'),
+      home: Menu(),
     );
   }
 }
