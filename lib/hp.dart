@@ -1,4 +1,4 @@
-import 'package:ayf_admin/menu.dart';
+import 'package:ayf_admin/ajout.dart';
 import 'package:ayf_admin/models/simpleroundbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
@@ -66,6 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
             title: Text(widget.title),
@@ -108,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void changementPage() {
     Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bC){
-      return new Menu();
+      return new Ajout();
     }));
   }
 }

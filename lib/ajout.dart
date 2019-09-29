@@ -46,177 +46,170 @@ class _Ajout extends State<Ajout> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Flexible(
-                child: GridView.count(
-                  crossAxisCount: 3,
-                  childAspectRatio: (MediaQuery.of(context).size.width*5 / MediaQuery.of(context).size.height/3),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  children : enumerate(
-                      tableaux,
-                          (index, item) {
-                        String image = images[index];
-                        int rad = radios[index];
-                        return Card(
-                          color: couleurProno,
-                          elevation: 10.0,
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Image.asset(image, height: MediaQuery.of(context).size.height/11,),
-                                Radio(
-                                    activeColor: Colors.blue.shade900,
-                                    value: rad,
-                                    groupValue: this._radioVal,
-                                    onChanged: (int val) {
-                                      setState(() {
-                                        this._radioVal = val;
-                                        couleurProno = Colors.green;
-                                      });
-                                    }
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      }
-                  ).toList(),
-                ),
-              ),
-              SizedBox(height: 30.0,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  CustomText("Bookmaker : ", factor: 1.5,),
-                  DropdownButton(
-                      value: bookmakerSelection,
-                      hint: CustomText("Choix", factor: 1.3,),
-                      items: bookmakers
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: CustomText(value, color: Colors.black, factor: 1.5,),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          bookmakerSelection = value;
-                        });
-                      }
-                  )
-                ],
-              ),
-              SizedBox(height: 30.0,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  CustomText("Date du match : ", color: Colors.white, factor: 1.3,),
-                  Visibility(
-                      visible: dateChoisi,
-                      child: Container(
-                        margin: EdgeInsets.all(20.0),
-                        child: CustomText((date != null) ? f.format(date) : "Rien", factor: 1.3,),)
-                  ),
-                  RaisedButton(
-                    color: couleurDateChoisi,
-                    child: CustomText("Choisi"),
-                    onPressed: () {
-                      DatePicker.showDatePicker(context,
-                          showTitleActions: true,
-                          minTime: DateTime(2000, 1, 1),
-                          maxTime: DateTime(2022, 12, 31),
-                          onConfirm: (dateConfirm) {
-                            setState(() {
-                              couleurDateChoisi = Colors.green;
-                              date = dateConfirm;
-                              dateChoisi = true;
-                            });
-                          },
-                          currentTime: DateTime.now(), locale: LocaleType.fr);},
-                  ),
-                ],
-              ),
-              SizedBox(height: 30.0,),
-              champRow(0, "Match"),
-              SizedBox(height: 30.0,),
-              champRow(1, "Pronostic"),
-              SizedBox(height: 30.0,),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      CustomText("Explication : ", factor: 1.3,),
-                      CustomText("Non", factor: 1.3,),
-                      Switch(
-                          value: switchValue,
-                          onChanged: (bool b) {
-                            setState(() {
-                              switchValue = b;
-                            });
-                          }
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            GridView.count(
+              crossAxisCount: 3,
+              childAspectRatio: (MediaQuery.of(context).size.width*5 / MediaQuery.of(context).size.height/3),
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              children : enumerate(
+                  tableaux,
+                      (index, item) {
+                    String image = images[index];
+                    int rad = radios[index];
+                    return Card(
+                      color: couleurProno,
+                      elevation: 10.0,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Image.asset(image, height: MediaQuery.of(context).size.height/11,),
+                            Radio(
+                                activeColor: Colors.blue.shade900,
+                                value: rad,
+                                groupValue: this._radioVal,
+                                onChanged: (int val) {
+                                  setState(() {
+                                    this._radioVal = val;
+                                    couleurProno = Colors.green;
+                                  });
+                                }
+                            )
+                          ],
+                        ),
                       ),
-                      CustomText("Oui", factor: 1.3,),
-                    ],
-                  ),
-                  Visibility(
+                    );
+                  }
+              ).toList(),
+            ),
+            SizedBox(height: 30.0,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                CustomText("Bookmaker : ", factor: 1.5,),
+                DropdownButton(
+                    value: bookmakerSelection,
+                    hint: CustomText("Choix", factor: 1.3,),
+                    items: bookmakers
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: CustomText(value, color: Colors.black, factor: 1.5,),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        bookmakerSelection = value;
+                      });
+                    }
+                )
+              ],
+            ),
+            SizedBox(height: 30.0,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                CustomText("Date du match : ", color: Colors.white, factor: 1.3,),
+                Visibility(
+                    visible: dateChoisi,
+                    child: Container(
+                      margin: EdgeInsets.all(20.0),
+                      child: CustomText((date != null) ? f.format(date) : "Rien", factor: 1.3,),)
+                ),
+                RaisedButton(
+                  color: couleurDateChoisi,
+                  child: CustomText("Choisi"),
+                  onPressed: () {
+                    DatePicker.showDatePicker(context,
+                        showTitleActions: true,
+                        minTime: DateTime(2000, 1, 1),
+                        maxTime: DateTime(2022, 12, 31),
+                        onConfirm: (dateConfirm) {
+                          setState(() {
+                            couleurDateChoisi = Colors.green;
+                            date = dateConfirm;
+                            dateChoisi = true;
+                          });
+                        },
+                        currentTime: DateTime.now(), locale: LocaleType.fr);},
+                ),
+              ],
+            ),
+            SizedBox(height: 30.0,),
+            champRow(0, "Match"),
+            SizedBox(height: 30.0,),
+            champRow(1, "Pronostic"),
+            SizedBox(height: 30.0,),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    CustomText("Explication : ", factor: 1.3,),
+                    CustomText("Non", factor: 1.3,),
+                    Switch(
+                        value: switchValue,
+                        onChanged: (bool b) {
+                          setState(() {
+                            switchValue = b;
+                          });
+                        }
+                    ),
+                    CustomText("Oui", factor: 1.3,),
+                  ],
+                ),
+                Visibility(
                     visible: switchValue,
                     child: TextFormField(
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Explication"
+                          border: OutlineInputBorder(),
+                          labelText: "Explication"
                       ),
                       maxLines: 2,
                     )
-                  )
-                ],
-              ),
-              SizedBox(height: 30.0,),
-              champRow(2, "Côte"),
-              Container(
-                width: MediaQuery.of(context).size.width/1.5,
-                child: SimpleRoundIconButton(
-                  backgroundColor: Colors.green,
-                  buttonText: Text("Envoyer !", maxLines: 3, style: TextStyle(
-                      color: Colors.white
-                  ),),
-                  textColor: Colors.white,
-                  icon: Icon(Icons.check_box),
-                  onPressed: () {
-                    List<String> champsVides = new List();
-                    if(bookmakerSelection==null || f==null || matchSelection==null || pronoSelection==null || coteSelection==null ) {
-                      if(bookmakerSelection==null) {
-                        champsVides.add("bookmaker");
-                      }
-                      if(f==null) {
-                        champsVides.add("date");
-                      }
-                      if(matchSelection==null) {
-                        champsVides.add("match");
-                      }
-                      if(pronoSelection==null) {
-                        champsVides.add("pronostic");
-                      }
-                      if(coteSelection==null) {
-                        champsVides.add("côte");
-                      }
-                      dialogErreur(champsVides);
+                )
+              ],
+            ),
+            SizedBox(height: 30.0,),
+            champRow(2, "Côte"),
+            Container(
+              width: MediaQuery.of(context).size.width/1.2,
+              child: SimpleRoundIconButton(
+                backgroundColor: Colors.green,
+                buttonText: CustomText("Envoyer !", color: Colors.white, factor: 1.5,),
+                textColor: Colors.white,
+                icon: Icon(Icons.check_box),
+                onPressed: () {
+                  List<String> champsVides = new List();
+                  if(bookmakerSelection==null || f==null || matchSelection==null || pronoSelection==null || coteSelection==null ) {
+                    if(bookmakerSelection==null) {
+                      champsVides.add("bookmaker");
                     }
-                    Pronostic p = new Pronostic(null, bookmakerSelection, tableaux[this._radioVal], f.format(date), matchSelection, pronoSelection, coteSelection, explicationSelection, null);
-                    print(p.toJson());
-                  },
-                ),
+                    if(f==null) {
+                      champsVides.add("date");
+                    }
+                    if(matchSelection==null) {
+                      champsVides.add("match");
+                    }
+                    if(pronoSelection==null) {
+                      champsVides.add("pronostic");
+                    }
+                    if(coteSelection==null) {
+                      champsVides.add("côte");
+                    }
+                    dialogErreur(champsVides);
+                  }
+                  Pronostic p = new Pronostic(null, bookmakerSelection, tableaux[this._radioVal], f.format(date), matchSelection, pronoSelection, coteSelection, explicationSelection, null);
+                  print(p.toJson());
+                },
               ),
-            ],
-          ),
+            ),
+            SizedBox(height: 30.0,),
+          ],
         ),
       ),
       drawer: AppDrawer(value: nom),
