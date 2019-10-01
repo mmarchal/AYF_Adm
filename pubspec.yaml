@@ -52,6 +52,10 @@ flutter:
     - assets/tennis.png
     - assets/facebook.png
     - assets/finger.png
+    - assets/tennisbouton.gif
+    - assets/mailbouton.gif
+    - assets/footbouton.gif
+    - assets/cover.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

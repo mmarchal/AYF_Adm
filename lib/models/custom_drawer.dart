@@ -23,6 +23,7 @@ class AppDrawer extends StatelessWidget {
               color: Colors.white,
             ),
           ),
+          containerWithNumber(context, "Menu", 0, Icons.home),
           containerWithNumber(context, "Ajouter un pronostic", 1, Icons.add),
           containerWithNumber(context, "Gestion des pronostics", 2, Icons.gesture),
           containerWithNumber(context, "Message pour Max", 3, Icons.mail)
@@ -46,6 +47,9 @@ class AppDrawer extends StatelessWidget {
 
   changePageAnim(int redirection) {
     switch (redirection) {
+      case 0 :
+        return new MyHomePage();
+        break;
       case 1 :
         return new Ajout();
         break;

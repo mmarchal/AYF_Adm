@@ -66,30 +66,32 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: Center(
-            child: SingleChildScrollView(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    FlatButton(
-                        onPressed: _authenticate,
-                        padding: EdgeInsets.all(0.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Image.asset('assets/finger.png', width: MediaQuery.of(context).size.width/2,),
-                            SizedBox(height: 20.0,),
-                            CustomText("Clique sur l'empreinte !", color: Colors.blue, factor: 3.0,)
-                          ],
-                        )
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                /*FlatButton(
+                    onPressed: _authenticate,
+                    padding: EdgeInsets.all(0.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Image.asset('assets/finger.png', width: MediaQuery.of(context).size.width/2,),
+                        SizedBox(height: 20.0,),
+                        CustomText("Clique sur l'empreinte !", color: Colors.blue, factor: 3.0,)
+                      ],
                     )
-                  ]),
-            ),
-          ),
-        ));
+                )*/
+                Image.asset("assets/cover.jpg", fit: BoxFit.contain,),
+                CustomText("Alex & Yann & Fab\nParis sportifs", factor: 2.0,),
+
+              ]),
+        ),
+      ),
+    );
   }
 
   void changementPage() {
