@@ -1,4 +1,5 @@
 import 'package:ayf_admin/ajout.dart';
+import 'package:ayf_admin/models/custom_text.dart';
 import 'package:ayf_admin/models/simpleroundbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
@@ -68,39 +69,23 @@ class _MyHomePageState extends State<MyHomePage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
         home: Scaffold(
-          appBar: AppBar(
-            title: Text(widget.title),
-            centerTitle: true,
-          ),
           body: Center(
             child: SingleChildScrollView(
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    FlutterLogo(size: MediaQuery.of(context).size.width/3.5,),
-                    champAuth(0, "Nom d'utilisateur"),
-                    champAuth(1, "Mot de passe"),
-                    SimpleRoundIconButton(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      buttonText: Text("CONNEXION", style: TextStyle(
-                          color: Colors.white
-                      ),),
-                      textColor: Colors.white,
-                      icon: Icon(Icons.check),
-                      iconAlignment: Alignment.centerRight,
-                      onPressed: () {
-
-                      },
-                    ),
-                    SimpleRoundIconButton(
-                      backgroundColor: Colors.green,
-                      buttonText: Text("EMPREINTE DIGITALE", maxLines: 3, style: TextStyle(
-                          color: Colors.white
-                      ),),
-                      textColor: Colors.white,
-                      icon: Icon(Icons.arrow_forward),
-                      onPressed: _authenticate,
-                    ),
+                    FlatButton(
+                        onPressed: _authenticate,
+                        padding: EdgeInsets.all(0.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Image.asset('assets/finger.png', width: MediaQuery.of(context).size.width/2,),
+                            SizedBox(height: 20.0,),
+                            CustomText("Clique sur l'empreinte !", color: Colors.blue, factor: 3.0,)
+                          ],
+                        )
+                    )
                   ]),
             ),
           ),

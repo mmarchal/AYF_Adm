@@ -1,17 +1,14 @@
 class Pronostic {
 
-  int id;
   String bookmaker;
   String sport;
   String date_match;
   String match_prono;
   String pronostic;
-  double cote;
+  String cote;
   String explication;
-  int resultat;
 
-  Pronostic(int i, String b, String s, String dT, String m, String p, double c, String e, int r) {
-    this.id = i;
+  Pronostic(String b, String s, String dT, String m, String p, String c, String e) {
     this.bookmaker = b;
     this.sport = s;
     this.date_match = dT;
@@ -19,12 +16,11 @@ class Pronostic {
     this.pronostic = p;
     this.cote = c;
     this.explication = e;
-    this.resultat = r;
   }
 
   @override
   String toString() {
-    return 'Pronostic{"id": "$id", "bookmaker": "$bookmaker", "sport": "$sport", "date_match": "$date_match", "match_prono": "$match_prono", "pronostic": "$pronostic", "cote": "$cote", "explication": "$explication", "resultat": "$resultat"}';
+    return 'Pronostic{"bookmaker": "$bookmaker", "sport": "$sport", "date_match": "$date_match", "match_prono": "$match_prono", "pronostic": "$pronostic", "cote": "$cote", "explication": "$explication"}';
   }
 
   Pronostic.fromJson(Map<String, dynamic> json)
@@ -34,8 +30,7 @@ class Pronostic {
         match_prono = json['match_prono'],
         pronostic = json['pronostic'],
         cote = json['cote'],
-        explication = json['explication'],
-        resultat = json['resultat'];
+        explication = json['explication'];
 
   Map<String, dynamic> toJson() =>
       {
@@ -45,8 +40,7 @@ class Pronostic {
         'match_prono': match_prono,
         'pronostic' : pronostic,
         'cote' : cote,
-        'explication' : explication,
-        'resultat': resultat
+        'explication' : explication
       };
 
 }

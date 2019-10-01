@@ -1,3 +1,5 @@
+import 'package:ayf_admin/checksend.dart';
+import 'package:ayf_admin/models/api.dart';
 import 'package:ayf_admin/models/custom_drawer.dart';
 import 'package:ayf_admin/models/custom_text.dart';
 import 'package:ayf_admin/models/pronostic.dart';
@@ -5,6 +7,8 @@ import 'package:ayf_admin/models/simpleroundbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:load/load.dart';
+import 'package:toast/toast.dart';
 
 class Ajout extends StatefulWidget {
   @override
@@ -34,6 +38,8 @@ class _Ajout extends State<Ajout> {
 
   var couleurDateChoisi = Colors.red;
   final f = new DateFormat('yyyy-MM-dd');
+
+  BuildContext contextDialog;
 
   @override
   Widget build(BuildContext context) {
@@ -202,9 +208,33 @@ class _Ajout extends State<Ajout> {
                       champsVides.add("côte");
                     }
                     dialogErreur(champsVides);
+                  } else {
+                    showDialog(context: context, builder: (context) {
+                      return new SimpleDialog(
+                          children: <Widget>[
+                            new Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    new CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.black),),
+                                    new CustomText('Envoie en cours !', color: Colors.black, factor: 2.0,)
+                                  ],
+                                )
+                            )
+                          ]
+                      );
+                    });
+                    Pronostic p = new Pronostic(bookmakerSelection, tableaux[this._radioVal], f.format(date), matchSelection, pronoSelection, coteSelection.toString(), (explicationSelection==null) ? "" : explicationSelection);
+                    Api.sendDatas(p).then((response){
+                      if(response.body=="true") {
+                        Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bC){
+                          return new CheckSend(pronostic: p,);
+                        }));
+                      } else {
+                        Toast.show(response.statusCode, context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+                      }
+                    });
                   }
-                  Pronostic p = new Pronostic(null, bookmakerSelection, tableaux[this._radioVal], f.format(date), matchSelection, pronoSelection, coteSelection, explicationSelection, null);
-                  print(p.toJson());
                 },
               ),
             ),
@@ -272,7 +302,6 @@ class _Ajout extends State<Ajout> {
           content: Container(
             width: double.maxFinite,
             child: Column(
-              //mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 CustomText("Voici le(s) champ(s) qui doivent être rempli : ", color: Colors.red, factor: 1.75,),
