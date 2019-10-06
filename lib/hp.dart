@@ -1,4 +1,7 @@
 import 'package:ayf_admin/ajout.dart';
+import 'package:ayf_admin/gestion.dart';
+import 'package:ayf_admin/message.dart';
+import 'package:ayf_admin/models/custom_drawer.dart';
 import 'package:ayf_admin/models/custom_text.dart';
 import 'package:ayf_admin/models/simpleroundbutton.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.green.shade300,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -86,9 +89,70 @@ class _MyHomePageState extends State<MyHomePage> {
                     )
                 )*/
                 Image.asset("assets/cover.jpg", fit: BoxFit.contain,),
+                SizedBox(height: 20.0,),
                 CustomText("Alex & Yann & Fab\nParis sportifs", factor: 2.0,),
-
-              ]),
+                SizedBox(height: 20.0,),
+                RaisedButton(
+                    color: Colors.white,
+                    child: new Container(
+                      width: MediaQuery.of(context).size.width/1.5,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Image.asset("assets/soccer.png", width: MediaQuery.of(context).size.width/5,),
+                          CustomText("Ajouter un pronostic",factor: 1.8, color: Colors.blue,)
+                        ],
+                      ),
+                    ),
+                    shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                    onPressed: () {
+                      Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bC){
+                        return new Ajout();
+                      }));
+                    }
+                ),
+                SizedBox(height: 30.0,),
+                RaisedButton(
+                    color: Colors.white,
+                    child: new Container(
+                      width: MediaQuery.of(context).size.width/1.5,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          CustomText("Gestion des pronos", factor: 1.8, color: Colors.blue,),
+                          Image.asset("assets/tennis.png", width: MediaQuery.of(context).size.width/7,),
+                        ],
+                      ),
+                    ),
+                    shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                    onPressed: () {
+                      Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bC){
+                        return new Gestion();
+                      }));
+                    }
+                ),
+                SizedBox(height: 30.0,),
+                RaisedButton(
+                    color: Colors.white,
+                    child: new Container(
+                      width: MediaQuery.of(context).size.width/1.5,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Image.asset("assets/basket.png", width: MediaQuery.of(context).size.width/7,),
+                          CustomText("Contact Max", factor: 1.8, color: Colors.blue,)
+                        ],
+                      ),
+                    ),
+                    shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                    onPressed: () {
+                      Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bC){
+                        return new Message();
+                      }));
+                    }
+                ),
+              ]
+          ),
         ),
       ),
     );
